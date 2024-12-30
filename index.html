@@ -1,13 +1,29 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="touch-icon.png" />
+        <link rel="manifest" href="manifest.json" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sally</title>
+        <style>
+            html {
+                font-size: 12pt;
+            }
+            body {
+                background-color: #222222;
+                color: white;
+                box-sizing: border-box;
+                padding: 0;
+                margin: 0;
+                width: 100vw;
+                height: 100vh;
+                touch-action: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
 </html>
