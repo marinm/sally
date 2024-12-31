@@ -20,7 +20,9 @@ function dotClass(dot: Dot, iCurrent: number = -1) {
 export default function Timer() {
     const [time, setTime] = useState<Dayjs | null>(now());
     const [startedAt, setStartedAt] = useState<Dayjs | null>(null);
-    const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+    const [intervalId, setIntervalId] = useState<ReturnType<
+        typeof setInterval
+    > | null>(null);
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
     // Default to true. For some unknown reason, the canplaythrough event does
