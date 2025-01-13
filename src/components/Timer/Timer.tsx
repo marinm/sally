@@ -23,8 +23,7 @@ export default function Timer() {
     const intervalId = useRef<ReturnType<typeof setInterval> | null>(null);
     const audio = useRef<HTMLAudioElement>(null);
 
-    const elapsed =
-        time && startedAt ? time.diff(startedAt, 'millisecond') / 1000 : null;
+    const elapsed = time && startedAt ? time.diff(startedAt, 'second') : null;
 
     function start() {
         setStartedAt(now());
