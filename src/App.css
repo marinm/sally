@@ -59,16 +59,16 @@
 }
 
 .dot {
-    width: 2em;
-    height: 2em;
+    width: 3em;
+    height: 3em;
     border-radius: 50%;
     background-color: #444444;
     color: white;
-    padding: 0.5em;
     display: flex;
     justify-content: center;
     align-items: center;
     line-height: 1em;
+    box-sizing: border-box;
 }
 
 .dot-is-hold {
@@ -81,7 +81,7 @@
 }
 
 .dot-in-progress {
-    background-color: orange;
+    border: 2px solid #00ff00;
     transition: background-color 6000ms linear;
 }
 
