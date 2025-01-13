@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import classes from '../../helpers/classes';
 import { Dot } from './types';
@@ -23,35 +23,20 @@ export default function Timer() {
     const [intervalId, setIntervalId] = useState<ReturnType<
         typeof setInterval
     > | null>(null);
-    const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
-    // Default to true. For some unknown reason, the canplaythrough event does
-    // not happen on my phone.
-    const [canStart, setCanStart] = useState(true);
-
-    useEffect(() => {
-        if (audio) {
-            return;
-        }
-
-        const audioElement = new Audio('./bring-sally-up.mp3');
-        audioElement.addEventListener('canplaythrough', () => {
-            setCanStart(true);
-        });
-        setAudio(audioElement);
-    }, []);
+    const audio = useRef<HTMLAudioElement>(null);
 
     const elapsed =
         time && startedAt ? time.diff(startedAt, 'millisecond') / 1000 : null;
 
     function start() {
-        if (!canStart || !audio) {
-            return;
-        }
         setStartedAt(now());
         const id = setInterval(() => setTime(now()), 100);
         setIntervalId(id);
-        audio.play();
+
+        if (audio.current) {
+            audio.current.play();
+        }
     }
 
     function reset() {
@@ -62,12 +47,10 @@ export default function Timer() {
         setTime(null);
         setStartedAt(null);
 
-        if (!audio) {
-            return;
+        if (audio.current) {
+            audio.current.pause();
+            audio.current.currentTime = 0;
         }
-
-        audio.pause();
-        audio.currentTime = 0;
     }
 
     function onClick() {
@@ -82,11 +65,13 @@ export default function Timer() {
 
     return (
         <>
+            <audio
+                src="./bring-sally-up.mp3"
+                className="hidden"
+                ref={audio}
+            ></audio>
             <div>{elapsed}</div>
-            <div
-                className={classes({ dots: true, disabled: !canStart })}
-                onClick={onClick}
-            >
+            <div className={classes({ dots: true })} onClick={onClick}>
                 {DOTS.map((dot) => (
                     <div className={dotClass(dot, iCurrent)} key={dot.i}>
                         {dot.display}
