@@ -20,10 +20,7 @@ function dotClass(dot: Dot, iCurrent: number = -1) {
 export default function Timer() {
     const [time, setTime] = useState<Dayjs | null>(now());
     const [startedAt, setStartedAt] = useState<Dayjs | null>(null);
-    const [intervalId, setIntervalId] = useState<ReturnType<
-        typeof setInterval
-    > | null>(null);
-
+    const intervalId = useRef<ReturnType<typeof setInterval> | null>(null);
     const audio = useRef<HTMLAudioElement>(null);
 
     const elapsed =
@@ -31,19 +28,15 @@ export default function Timer() {
 
     function start() {
         setStartedAt(now());
-        const id = setInterval(() => setTime(now()), 100);
-        setIntervalId(id);
-
-        if (audio.current) {
-            audio.current.play();
-        }
+        intervalId.current = setInterval(() => setTime(now()), 100);
+        audio.current?.play();
     }
 
     function reset() {
-        if (intervalId != null) {
-            clearInterval(intervalId);
+        if (intervalId.current != null) {
+            clearInterval(intervalId.current);
         }
-        setIntervalId(null);
+        intervalId.current = null;
         setTime(null);
         setStartedAt(null);
 
