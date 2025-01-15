@@ -31,10 +31,57 @@
     color: #222222;
 }
 
+.btn-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2em;
+    width: fit-content;
+    --border-radius: 8px;
+}
+
+.btn-group button {
+    background-color: #333333;
+    border: none;
+    color: white;
+    padding: 1em;
+    font-size: 18pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+}
+
+.btn-group button:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.btn-group button:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+button svg {
+    fill: #00ff00;
+    width: 1em;
+    height: 1em;
+}
+
+button:disabled svg {
+    fill: #444444;
+}
+
 .flex {
     display: flex;
     gap: 1em;
     width: 100%;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
 }
 
 .bring-instruction {

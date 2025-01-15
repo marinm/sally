@@ -1,12 +1,10 @@
 import { useState, useRef } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
 import classes from '../../helpers/classes';
 import { Dot } from './types';
 import { DOTS } from './constants';
-
-function now() {
-    return dayjs();
-}
+import Play from '../icons/Play';
+import Pause from '../icons/Pause';
+import Stop from '../icons/Stop';
 
 function dotClass(dot: Dot, iCurrent: number = -1) {
     return classes({
@@ -18,35 +16,41 @@ function dotClass(dot: Dot, iCurrent: number = -1) {
 }
 
 export default function Timer() {
-    const [time, setTime] = useState<Dayjs | null>(now());
-    const [startedAt, setStartedAt] = useState<Dayjs | null>(null);
-    const intervalId = useRef<ReturnType<typeof setInterval> | null>(null);
+    const [intervalId, setIntervalId] = useState<ReturnType<
+        typeof setInterval
+    > | null>(null);
     const audio = useRef<HTMLAudioElement>(null);
+    const [elapsed, setElapsed] = useState<number>(0);
 
-    const elapsed = time && startedAt ? time.diff(startedAt, 'second') : null;
+    const isPaused = audio.current?.paused ?? false;
 
-    function start() {
-        setStartedAt(now());
-        intervalId.current = setInterval(() => setTime(now()), 100);
+    const canPlay = isPaused;
+    const canPause = !isPaused;
+    const canStop = (audio.current?.currentTime ?? 0) != 0;
+
+    function tick() {
+        setElapsed(audio.current?.currentTime ?? 0);
+    }
+
+    function play() {
+        setIntervalId(setInterval(tick, 100));
         audio.current?.play();
     }
 
-    function reset() {
-        if (intervalId.current != null) {
-            clearInterval(intervalId.current);
-        }
-        intervalId.current = null;
-        setTime(null);
-        setStartedAt(null);
-
+    function stop(rewind = false) {
         if (audio.current) {
             audio.current.pause();
-            audio.current.currentTime = 0;
+            audio.current.currentTime = rewind ? 0 : audio.current.currentTime;
         }
-    }
 
-    function onClick() {
-        startedAt ? reset() : start();
+        if (rewind) {
+            setElapsed(0);
+        }
+
+        if (intervalId != null) {
+            clearInterval(intervalId);
+            setIntervalId(null);
+        }
     }
 
     const iNext = elapsed
@@ -60,15 +64,27 @@ export default function Timer() {
             <audio
                 src="./bring-sally-up.mp3"
                 className="hidden"
+                controls
                 ref={audio}
             ></audio>
             <div>{elapsed}</div>
-            <div className={classes({ dots: true })} onClick={onClick}>
+            <div className={classes({ dots: true })}>
                 {DOTS.map((dot) => (
                     <div className={dotClass(dot, iCurrent)} key={dot.i}>
                         {dot.display}
                     </div>
                 ))}
+            </div>
+            <div className="btn-group">
+                <button onClick={play} disabled={!canPlay}>
+                    <Play />
+                </button>
+                <button onClick={() => stop(false)} disabled={!canPause}>
+                    <Pause />
+                </button>
+                <button onClick={() => stop(true)} disabled={!canStop}>
+                    <Stop />
+                </button>
             </div>
         </>
     );
