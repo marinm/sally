@@ -59,6 +59,11 @@ export default function Timer() {
 
     const iCurrent = iNext ? iNext - 1 : -1;
 
+    const mm = Math.floor(elapsed / 60.0)
+        .toString()
+        .padStart(2, '0');
+    const ss = (elapsed % 60.0).toFixed(1).toString().padStart(4, '0');
+
     return (
         <>
             <audio
@@ -67,7 +72,9 @@ export default function Timer() {
                 controls
                 ref={audio}
             ></audio>
-            <div>{elapsed}</div>
+            <div>
+                {mm}:{ss}
+            </div>
             <div className={classes({ dots: true })}>
                 {DOTS.map((dot) => (
                     <div className={dotClass(dot, iCurrent)} key={dot.i}>
