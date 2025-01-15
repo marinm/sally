@@ -22,7 +22,7 @@ export default function Timer() {
     const audio = useRef<HTMLAudioElement>(null);
     const [elapsed, setElapsed] = useState<number>(0);
 
-    const isPaused = audio.current?.paused ?? false;
+    const isPaused = intervalId == null;
 
     const canPlay = isPaused;
     const canPause = !isPaused;
