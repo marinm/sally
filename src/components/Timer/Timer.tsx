@@ -15,10 +15,10 @@ function dotClass(dot: Dot, iCurrent: number = -1) {
     });
 }
 
+type NullableInterval = null | ReturnType<typeof setInterval>;
+
 export default function Timer() {
-    const [intervalId, setIntervalId] = useState<ReturnType<
-        typeof setInterval
-    > | null>(null);
+    const [intervalId, setIntervalId] = useState<NullableInterval>(null);
     const audio = useRef<HTMLAudioElement>(null);
     const [elapsed, setElapsed] = useState<number>(0);
 
