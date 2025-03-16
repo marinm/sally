@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import classes from '../../helpers/classes';
+import { classes, timeFormat } from '../../utils/utils';
 import { Dot } from './types';
 import { DOTS } from './constants';
 import Play from '../icons/Play';
@@ -37,11 +37,6 @@ export default function Timer() {
 
     const iCurrent = iNext ? iNext - 1 : -1;
 
-    const mm = Math.floor(elapsed / 60.0)
-        .toString()
-        .padStart(2, '0');
-    const ss = (elapsed % 60.0).toFixed(0).toString().padStart(2, '0');
-
     return (
         <>
             <audio
@@ -51,9 +46,7 @@ export default function Timer() {
                 onTimeUpdate={() => setElapsed(audio.current?.currentTime ?? 0)}
                 ref={audio}
             ></audio>
-            <div>
-                {mm}:{ss}
-            </div>
+            <div>{timeFormat(elapsed)}</div>
             <div className={classes({ dots: true })}>
                 {DOTS.map((dot) => (
                     <div className={dotClass(dot, iCurrent)} key={dot.i}>
