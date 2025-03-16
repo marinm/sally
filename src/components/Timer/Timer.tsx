@@ -20,9 +20,6 @@ export default function Timer() {
     const [elapsed, setElapsed] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-    const canPause = isPlaying;
-    const canStop = !isPlaying && elapsed > 0;
-
     function stop(rewind = false) {
         if (audio.current) {
             audio.current.pause();
@@ -56,13 +53,19 @@ export default function Timer() {
                 ))}
             </div>
             <div className="btn-group">
-                <button onClick={() => audio.current?.play()} disabled={false}>
+                <button
+                    onClick={() => audio.current?.play()}
+                    disabled={isPlaying}
+                >
                     <Play />
                 </button>
-                <button onClick={() => stop(false)} disabled={!canPause}>
+                <button onClick={() => stop(false)} disabled={!isPlaying}>
                     <Pause />
                 </button>
-                <button onClick={() => stop(true)} disabled={!canStop}>
+                <button
+                    onClick={() => stop(true)}
+                    disabled={!(isPlaying || elapsed > 0)}
+                >
                     <Stop />
                 </button>
             </div>
