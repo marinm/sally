@@ -18,11 +18,10 @@ function dotClass(dot: Dot, iCurrent: number = -1) {
 export default function Timer() {
     const audio = useRef<HTMLAudioElement>(null);
     const [elapsed, setElapsed] = useState<number>(0);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-    const isPaused = audio.current?.paused;
-
-    const canPause = !isPaused;
-    const canStop = (audio.current?.currentTime ?? 0) != 0;
+    const canPause = isPlaying;
+    const canStop = !isPlaying && elapsed > 0;
 
     function stop(rewind = false) {
         if (audio.current) {
@@ -43,6 +42,8 @@ export default function Timer() {
                 src="./bring-sally-up.mp3"
                 className="hidden"
                 controls
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
                 onTimeUpdate={() => setElapsed(audio.current?.currentTime ?? 0)}
                 ref={audio}
             ></audio>
