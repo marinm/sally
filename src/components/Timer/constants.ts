@@ -33,5 +33,5 @@ export const DOTS = [
     { i: 31, startsAt: 187.0, display: '28', isHold: false },
     { i: 32, startsAt: 193.0, display: '29', isHold: false },
     { i: 33, startsAt: 199.0, display: '30', isHold: false },
-    { i: 34, startsAt: 205.0, display: '30★', isHold: false },
+    { i: 34, startsAt: 205.0, display: '30★', isHold: true },
 ] as const;
