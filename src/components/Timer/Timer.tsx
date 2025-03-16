@@ -15,41 +15,19 @@ function dotClass(dot: Dot, iCurrent: number = -1) {
     });
 }
 
-type NullableInterval = null | ReturnType<typeof setInterval>;
-
 export default function Timer() {
-    const [intervalId, setIntervalId] = useState<NullableInterval>(null);
     const audio = useRef<HTMLAudioElement>(null);
     const [elapsed, setElapsed] = useState<number>(0);
 
-    const isPaused = intervalId == null;
+    const isPaused = audio.current?.paused;
 
-    const canPlay = isPaused;
     const canPause = !isPaused;
     const canStop = (audio.current?.currentTime ?? 0) != 0;
-
-    function tick() {
-        setElapsed(audio.current?.currentTime ?? 0);
-    }
-
-    function play() {
-        setIntervalId(setInterval(tick, 100));
-        audio.current?.play();
-    }
 
     function stop(rewind = false) {
         if (audio.current) {
             audio.current.pause();
             audio.current.currentTime = rewind ? 0 : audio.current.currentTime;
-        }
-
-        if (rewind) {
-            setElapsed(0);
-        }
-
-        if (intervalId != null) {
-            clearInterval(intervalId);
-            setIntervalId(null);
         }
     }
 
@@ -62,7 +40,7 @@ export default function Timer() {
     const mm = Math.floor(elapsed / 60.0)
         .toString()
         .padStart(2, '0');
-    const ss = (elapsed % 60.0).toFixed(1).toString().padStart(4, '0');
+    const ss = (elapsed % 60.0).toFixed(0).toString().padStart(2, '0');
 
     return (
         <>
@@ -70,6 +48,7 @@ export default function Timer() {
                 src="./bring-sally-up.mp3"
                 className="hidden"
                 controls
+                onTimeUpdate={() => setElapsed(audio.current?.currentTime ?? 0)}
                 ref={audio}
             ></audio>
             <div>
@@ -83,7 +62,7 @@ export default function Timer() {
                 ))}
             </div>
             <div className="btn-group">
-                <button onClick={play} disabled={!canPlay}>
+                <button onClick={() => audio.current?.play()} disabled={false}>
                     <Play />
                 </button>
                 <button onClick={() => stop(false)} disabled={!canPause}>
