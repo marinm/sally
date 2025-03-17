@@ -8,19 +8,17 @@ Turn up the volume 🔈
 
 ## About
 
-The "Bring Sally Up" exercise challenge is 30 reps of anything over 3:30 minutes. Get ready to sweat 🔥
+The "Bring Sally Up" exercise challenge ([YouTube](https://www.youtube.com/results?search_query=bring+sally+up)) is 30 reps of anything over 3:30 minutes.
 
-It's [popular on YouTube](https://www.youtube.com/results?search_query=bring+sally+up). Check out [my favourite](https://www.youtube.com/watch?v=koMp3ei4xJw&ab_channel=EziBoteach) - this is the video I took the audio from.
+Get ready to sweat 🔥
 
-## Screenshot
+## Song
 
-![Screenshot](./screenshot.png)
+The audio in this timer is from [this popular video](https://www.youtube.com/watch?v=koMp3ei4xJw&ab_channel=EziBoteach).
 
-The web page is a [PWA](https://en.wikipedia.org/wiki/Progressive_web_app), so it can be used as a normal website, or saved as an app.
+The song is "Flower" from the album Play (1999) by Moby.
 
-## Lyrics
-
-The song is "Flower" from the album Play (1999) by Moby. "Bring Sally Up" is actually a misheard lyric:
+"Bring Sally Up" is actually a misheard lyric:
 
 > Green Sally up, Green Sally down
 >
