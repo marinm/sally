@@ -1,4 +1,4 @@
-export const DOTS = [
+export const REPS = [
     { i: 0, startsAt: 0.0, display: 'P', isHold: true },
     { i: 1, startsAt: 7.5, display: '1', isHold: false },
     { i: 2, startsAt: 13.5, display: '2', isHold: false },
@@ -33,5 +33,5 @@ export const DOTS = [
     { i: 31, startsAt: 187.0, display: '28', isHold: false },
     { i: 32, startsAt: 193.0, display: '29', isHold: false },
     { i: 33, startsAt: 199.0, display: '30', isHold: false },
-    { i: 34, startsAt: 205.0, display: '30★', isHold: true },
+    { i: 34, startsAt: 205.0, display: '30H', isHold: true },
 ] as const;

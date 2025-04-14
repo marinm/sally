@@ -1,17 +1,17 @@
 import { useState, useRef } from 'react';
 import { classes, timeFormat } from '../../utils/utils';
-import { Dot } from './types';
-import { DOTS } from './constants';
+import { Rep } from './types';
+import { REPS } from './constants';
 import Play from '../icons/Play';
 import Pause from '../icons/Pause';
 import Stop from '../icons/Stop';
 
-function dotClass(dot: Dot, iCurrent: number = -1) {
+function repClass(rep: Rep, iCurrent: number = -1) {
     return classes({
-        dot: true,
-        'dot-is-hold': dot.isHold,
-        'dot-in-progress': iCurrent == dot.i,
-        'dot-is-done': iCurrent > dot.i,
+        rep: true,
+        'rep-is-hold': rep.isHold,
+        'rep-in-progress': iCurrent == rep.i,
+        'rep-is-done': iCurrent > rep.i,
     });
 }
 
@@ -28,7 +28,7 @@ export default function Timer() {
     }
 
     const iNext = elapsed
-        ? DOTS.findIndex((dot) => dot.startsAt >= elapsed)
+        ? REPS.findIndex((rep) => rep.startsAt >= elapsed)
         : null;
 
     const iCurrent = iNext ? iNext - 1 : -1;
@@ -44,10 +44,10 @@ export default function Timer() {
                 onTimeUpdate={() => setElapsed(audio.current?.currentTime ?? 0)}
                 ref={audio}
             ></audio>
-            <div>{DOTS[iCurrent]?.display ?? 'Bring Sally Up'}</div>
-            <div className={classes({ dots: true })}>
-                {DOTS.map((dot) => (
-                    <div className={dotClass(dot, iCurrent)} key={dot.i}></div>
+            <div>{REPS[iCurrent]?.display ?? 'Bring Sally Up'}</div>
+            <div className={classes({ reps: true })}>
+                {REPS.map((rep) => (
+                    <div className={repClass(rep, iCurrent)} key={rep.i}></div>
                 ))}
             </div>
             <br />

@@ -89,7 +89,7 @@ button:disabled svg {
     font-family: Arial;
 }
 
-.dots {
+.reps {
     display: flex;
     gap: 0.1em;
     box-sizing: border-box;
@@ -98,11 +98,11 @@ button:disabled svg {
     -webkit-user-select: none;
 }
 
-.dots.disabled .dot {
+.reps.disabled .rep {
     color: #555555;
 }
 
-.dot {
+.rep {
     width: 0.5em;
     height: 2em;
     border-radius: 0.1em;
@@ -115,16 +115,16 @@ button:disabled svg {
     box-sizing: border-box;
 }
 
-.dot-is-hold {
+.rep-is-hold {
     background-color: #666666;
 }
 
-.dot-is-done {
+.rep-is-done {
     background-color: #00ff00;
     color: white;
 }
 
-.dot-in-progress {
+.rep-in-progress {
     border: 1px solid #00ff00;
     transition: background-color 6000ms linear;
 }

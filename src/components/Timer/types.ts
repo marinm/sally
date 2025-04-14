@@ -1,4 +1,4 @@
-export type Dot = {
+export type Rep = {
     i: number;
     startsAt: number;
     display: string;
