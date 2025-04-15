@@ -57,7 +57,11 @@ export default function Timer() {
                 onTimeUpdate={() => setElapsed(audio.current?.currentTime ?? 0)}
                 ref={audio}
             ></audio>
-            <div>{REPS[repIndex]?.display ?? 'Bring Sally Up'}</div>
+            <div>
+                {isDone
+                    ? 'Done'
+                    : (REPS[repIndex]?.display ?? 'Bring Sally Up')}
+            </div>
             <div className={classes({ reps: true })}>
                 {REPS.map((rep) => (
                     <div
