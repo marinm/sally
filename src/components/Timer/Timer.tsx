@@ -27,11 +27,9 @@ export default function Timer() {
         }
     }
 
-    const iNext = elapsed
-        ? REPS.findIndex((rep) => rep.startsAt >= elapsed)
-        : null;
-
-    const iCurrent = iNext ? iNext - 1 : -1;
+    // If no match is found, nextIndex is -1. This happens on the last rep.
+    const iNext = REPS.findIndex((rep) => rep.startsAt > elapsed);
+    const iCurrent = iNext === -1 ? REPS.length - 1 : iNext - 1;
 
     return (
         <>
