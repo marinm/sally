@@ -46,6 +46,12 @@ export default function Timer() {
         nextRepIndex === -1 ? REPS.length : nextRepIndex;
     const repIndex = isDone ? nextRepIndexRounded : nextRepIndexRounded - 1;
 
+    const message = isDone
+        ? 'Done'
+        : isStarted
+          ? (REPS[repIndex]?.display ?? 'Bring Sally Up')
+          : 'Bring Sally Up';
+
     return (
         <>
             <audio
@@ -57,11 +63,7 @@ export default function Timer() {
                 onTimeUpdate={() => setElapsed(audio.current?.currentTime ?? 0)}
                 ref={audio}
             ></audio>
-            <div>
-                {isDone
-                    ? 'Done'
-                    : (REPS[repIndex]?.display ?? 'Bring Sally Up')}
-            </div>
+            <div>{message}</div>
             <div className={classes({ reps: true })}>
                 {REPS.map((rep) => (
                     <div
