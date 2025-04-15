@@ -6,12 +6,12 @@ import Play from '../icons/Play';
 import Pause from '../icons/Pause';
 import Stop from '../icons/Stop';
 
-function repClass(rep: Rep, iCurrent: number = -1) {
+function repClass(rep: Rep, repIndex: number = -1) {
     return classes({
         rep: true,
         'rep-is-hold': rep.isHold,
-        'rep-in-progress': iCurrent == rep.i,
-        'rep-is-done': iCurrent > rep.i,
+        'rep-in-progress': repIndex == rep.i,
+        'rep-is-done': repIndex > rep.i,
     });
 }
 
@@ -28,8 +28,8 @@ export default function Timer() {
     }
 
     // If no match is found, nextIndex is -1. This happens on the last rep.
-    const iNext = REPS.findIndex((rep) => rep.startsAt > elapsed);
-    const iCurrent = iNext === -1 ? REPS.length - 1 : iNext - 1;
+    const nextRepIndex = REPS.findIndex((rep) => rep.startsAt > elapsed);
+    const repIndex = nextRepIndex === -1 ? REPS.length - 1 : nextRepIndex - 1;
 
     return (
         <>
@@ -42,10 +42,10 @@ export default function Timer() {
                 onTimeUpdate={() => setElapsed(audio.current?.currentTime ?? 0)}
                 ref={audio}
             ></audio>
-            <div>{REPS[iCurrent]?.display ?? 'Bring Sally Up'}</div>
+            <div>{REPS[repIndex]?.display ?? 'Bring Sally Up'}</div>
             <div className={classes({ reps: true })}>
                 {REPS.map((rep) => (
-                    <div className={repClass(rep, iCurrent)} key={rep.i}></div>
+                    <div className={repClass(rep, repIndex)} key={rep.i}></div>
                 ))}
             </div>
             <br />
