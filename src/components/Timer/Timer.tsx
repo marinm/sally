@@ -38,9 +38,13 @@ export default function Timer() {
         }
     }
 
+    const isDone = elapsed == audio.current?.duration;
+
     // If no match is found, nextIndex is -1. This happens on the last rep.
     const nextRepIndex = REPS.findIndex((rep) => rep.startsAt > elapsed);
-    const repIndex = nextRepIndex === -1 ? REPS.length - 1 : nextRepIndex - 1;
+    const nextRepIndexRounded =
+        nextRepIndex === -1 ? REPS.length : nextRepIndex;
+    const repIndex = isDone ? nextRepIndexRounded : nextRepIndexRounded - 1;
 
     return (
         <>
@@ -65,7 +69,7 @@ export default function Timer() {
             <br />
             <div>{timeFormat(elapsed)}</div>
             <div className="btn-group">
-                <button onClick={() => play()} disabled={isPlaying}>
+                <button onClick={() => play()} disabled={isPlaying || isDone}>
                     <Play />
                 </button>
                 <button onClick={() => stop(false)} disabled={!isPlaying}>
